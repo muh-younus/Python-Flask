@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>This is my home section</p>
-</body>
-</html>
+
+{% extends "base.html" %}
+{% block contents %}
+{% block style %}
+<style>
+    body{
+        background: lightblue;
+        color: darkblue;
+        font-size: medium;
+    }
+</style>
+{% endblock style %}
+
+<div class="container my-5">
+<h3>Welcome to the Home Page</h3>
+</div>
+{% endblock contents %}

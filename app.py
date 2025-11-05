@@ -1,11 +1,25 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///user.db"
+db = SQLAlchemy(app)
+
+class user(db.Model):
+    sno = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), nullable = False)
+    password = db.Column(db.String(40), nullable = False)
+    datetime = db.Column(db.DateTime, default = datetime.utcnow)
+
+with app.app_context():
+    db.create_all()
+
 @app.route("/")
 def home():
-    return render_template('index.html')
+    all_user = user.query.all()
+    return render_template('index.html', all_user = all_user)
 
 @app.route("/about")
 def about():
@@ -13,14 +27,21 @@ def about():
 @app.route("/contact")
 def contact():
     return "My contact  Page"
-@app.route("/login",methods=['GET','POST'])
-def login():
+@app.route("/register",methods=['GET','POST'])
+def register():
     if request.method == 'POST':
         username=request.form['username']
         password=request.form['password']
+        new_user= user(
+            username = username,
+            password = password
+        )
+        db.session.add(new_user)
+        db.session.commit()
         print(f"Username: {username}, Password: {password}")
-    
-    return render_template('login.html ')
+        return redirect(url_for('register'))
+
+    return render_template('register.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

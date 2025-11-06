@@ -43,5 +43,25 @@ def register():
 
     return render_template('register.html')
 
+@app.route("/update/<index>",methods=['GET','POST'])
+def update(index):
+    User = user.query.filter_by(sno=index).first()
+    if request.method == 'POST':
+        username1=request.form['username2']
+        password1 = request.form['password2']
+        User.username = username1
+        User.password = password1
+        db.session.add(User)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('update.html', user = User)
+@app.route("/delete/<index>",methods=['GET','POST'])
+def delete(index):
+    User = user.query.filter_by(sno=index).first()
+    db.session.delete(User)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

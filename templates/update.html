@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block contents %}
 <div class="container my-4 rounded-lg">
-    <form class="p-3" method="POST" action="/register">
-      <h3>Register User</h3>
+    <form class="p-3" method="POST" >
+        <h3>Update User Information</h3>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="text" class="form-control" name="username2" id="exampleInputEmail1" value={{user.username}} aria-describedby="emailHelp">
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+    <input type="password" class="form-control" name="password2" value={{user.password}} id="exampleInputPassword1">
   </div>
   
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Update</button>
 </form>
 </div>
 {% endblock contents %}
